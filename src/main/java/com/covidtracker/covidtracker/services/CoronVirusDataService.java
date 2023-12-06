@@ -33,6 +33,7 @@ public class CoronVirusDataService {
 
 
         HttpResponse<String> httpResponse = (HttpResponse<String>) client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(httpResponse);
 
 
 
