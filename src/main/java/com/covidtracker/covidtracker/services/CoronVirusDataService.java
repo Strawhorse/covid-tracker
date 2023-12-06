@@ -1,8 +1,10 @@
 package com.covidtracker.covidtracker.services;
 
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.csv.*;
 import org.apache.commons.csv.CSVRecord;
-
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.*;
@@ -11,6 +13,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
+
+//run this as a service using Spring annotation
+@Service
 public class CoronVirusDataService {
 
 //    service for fetching COVID data
@@ -26,7 +31,10 @@ public class CoronVirusDataService {
     }
 
 
-//    method to fetch data
+//    method to fetch data, annotation using Spring @PostConstruct
+    @PostConstruct
+    @Scheduled(cron = "* * 1 * * *")
+//    scheduled to work on an hour basis (second, minute, hour etc.)
     public void fetchVirusData() throws IOException, InterruptedException {
         List<LocationStats> newStats = new ArrayList<>();
 
@@ -35,14 +43,13 @@ public class CoronVirusDataService {
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(VIRUS_DATA_URL)).build();
 
-
         HttpResponse<String> httpResponse = (HttpResponse<String>) client.send(request, HttpResponse.BodyHandlers.ofString());
 //        System.out.println(httpResponse);
 
 //        replace with a stringbuilder for the output
         StringBuilder csvBodyReader = new StringBuilder(httpResponse.body());
 
-        CSVFormat records = CSVFormat.DEFAULT.withFirstRecordAsHeader();
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
 
 //        iterable loop to parse the csv data coming back in the CSV record
         for(CSVRecord record: records){
@@ -55,6 +62,7 @@ public class CoronVirusDataService {
             locationStat.setDiffFromToday(latestCases - previousDayCases);
             newStats.add(locationStat);
         }
+        this.allStats = newStats;
 
 
 
