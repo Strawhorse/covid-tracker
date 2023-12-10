@@ -1,6 +1,6 @@
-package com.covidtracker.covidtracker.services;
+package com.com.covidtracker.services;
 
-import com.com.covidtracker.covidtracker.LocationStats;
+import com.com.covidtracker.models.LocationStats;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.csv.*;
 import org.apache.commons.csv.CSVRecord;
@@ -51,17 +51,17 @@ public class CoronVirusDataService {
 //        replace with a Stringbuilder for the output
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(csvBodyReader);
 
 //        iterable loop to parse the csv data coming back in the CSV record
         for(CSVRecord record: records){
             LocationStats locationStat = new LocationStats();
-//            locationStat.setState(record.get("Province/State"));
+            locationStat.setState(record.get("Province/State"));
             locationStat.setCountry(record.get("Country/Region"));
             int latestCases = Integer.parseInt(record.get(record.size() - 1 ));
             int previousDayCases = Integer.parseInt(record.get(record.size() - 2 ));
-//            locationStat.setLatestTotalCases(latestCases);
-//            locationStat.setDiffFromToday(latestCases - previousDayCases);
+            locationStat.setLatestTotalCases(latestCases);
+            locationStat.setDiffFromToday(latestCases - previousDayCases);
             newStats.add(locationStat);
 
         }

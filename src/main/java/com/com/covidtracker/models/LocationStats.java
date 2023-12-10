@@ -1,4 +1,4 @@
-package com.com.covidtracker.covidtracker;
+package com.com.covidtracker.models;
 
 public class LocationStats {
 
@@ -42,6 +42,13 @@ public class LocationStats {
     public void setDiffFromToday(int i) {
     }
 
-
-
+    @Override
+    public String toString() {
+        return "LocationStats{" +
+                "state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", latestTotalCases=" + latestTotalCases +
+                ", diffFromPreviousDay=" + diffFromPreviousDay +
+                '}';
+    }
 }
