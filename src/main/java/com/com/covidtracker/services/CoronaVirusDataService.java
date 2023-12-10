@@ -18,10 +18,10 @@ import java.util.List;
 
 //run this as a service using Spring annotation
 @Service
-public class CoronVirusDataService {
+public class CoronaVirusDataService {
 
 //    service for fetching COVID data
-    private static String VIRUS_DATA_URL = "https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+    private static String VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
     //    Data just for testing purposes
     private List<LocationStats> allStats = new ArrayList<>();
@@ -51,7 +51,7 @@ public class CoronVirusDataService {
 //        replace with a Stringbuilder for the output
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(csvBodyReader);
+        Iterable <CSVRecord> records = CSVFormat.DEFAULT.withHeader().parse(csvBodyReader);
 
 //        iterable loop to parse the csv data coming back in the CSV record
         for(CSVRecord record: records){
