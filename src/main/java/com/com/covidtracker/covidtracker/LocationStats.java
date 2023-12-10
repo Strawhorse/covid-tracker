@@ -2,11 +2,38 @@ package com.com.covidtracker.covidtracker;
 
 public class LocationStats {
 
+    private String state;
+    private String country;
+    private int latestTotalCases;
+    private int diffFromPreviousDay;
 
-    public void setState(String s) {
+
+    public String getState() {
+        return state;
     }
 
-    public void setCountry(String s) {
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getLatestTotalCases() {
+        return latestTotalCases;
+    }
+
+    public int getDiffFromPreviousDay() {
+        return diffFromPreviousDay;
+    }
+
+    public void setDiffFromPreviousDay(int diffFromPreviousDay) {
+        this.diffFromPreviousDay = diffFromPreviousDay;
     }
 
     public void setLatestTotalCases(int latestCases) {
@@ -14,4 +41,7 @@ public class LocationStats {
 
     public void setDiffFromToday(int i) {
     }
+
+
+
 }

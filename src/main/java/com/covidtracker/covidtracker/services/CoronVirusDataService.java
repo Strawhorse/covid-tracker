@@ -48,7 +48,7 @@ public class CoronVirusDataService {
         HttpResponse<String> httpResponse = (HttpResponse<String>) client.send(request, HttpResponse.BodyHandlers.ofString());
 //        System.out.println(httpResponse);
 
-//        replace with a stringbuilder for the output
+//        replace with a Stringbuilder for the output
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
@@ -56,13 +56,14 @@ public class CoronVirusDataService {
 //        iterable loop to parse the csv data coming back in the CSV record
         for(CSVRecord record: records){
             LocationStats locationStat = new LocationStats();
-            locationStat.setState(record.get("Province/State"));
+//            locationStat.setState(record.get("Province/State"));
             locationStat.setCountry(record.get("Country/Region"));
             int latestCases = Integer.parseInt(record.get(record.size() - 1 ));
             int previousDayCases = Integer.parseInt(record.get(record.size() - 2 ));
-            locationStat.setLatestTotalCases(latestCases);
-            locationStat.setDiffFromToday(latestCases - previousDayCases);
+//            locationStat.setLatestTotalCases(latestCases);
+//            locationStat.setDiffFromToday(latestCases - previousDayCases);
             newStats.add(locationStat);
+
         }
         this.allStats = newStats;
 
