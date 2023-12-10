@@ -48,7 +48,7 @@ public class CoronaVirusDataService {
         HttpResponse<String> httpResponse = (HttpResponse<String>) client.send(request, HttpResponse.BodyHandlers.ofString());
 //        System.out.println(httpResponse);
 
-//        replace with a Stringbuilder for the output
+//        replace with a Stringreader for the output
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
         Iterable <CSVRecord> records = CSVFormat.DEFAULT.withHeader().parse(csvBodyReader);
